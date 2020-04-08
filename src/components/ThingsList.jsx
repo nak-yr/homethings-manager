@@ -42,13 +42,13 @@ class ThingsList extends React.Component {
                 </label>
                 <input type="submit" value="リストに追加"/>
             </form>
-            <div className="ListDisp">
-                <ul>
+            <div>
+                <ul className="ListDispWhole">
                     {this.state.thingsList.map((thing, index) =>
-                        <li key={index}>{thing.name}
-                            <ul>
-                                <li>{thing.location}</li>
-                                <li>{thing.memo}</li>
+                        <li key={index} className="ListDispThing">{thing.name}
+                            <ul className="ListDispProps">
+                                <li>Location : {thing.location}</li>
+                                <li>Memo : {thing.memo}</li>
                             </ul>
                         </li>
                         )
