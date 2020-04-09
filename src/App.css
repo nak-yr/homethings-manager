@@ -16,12 +16,15 @@ ul {
   list-style-type: none;
   font-size: calc(10px + 1vmin);
   padding-inline-start: 0vw;
-  width: 70vw;
+  width: 80vw;
   margin: auto;
 }
 li {
   display: flex;
   flex-direction: row;
+}
+ul.ListDispWhole {
+  margin: auto;
 }
 li.ListDispThing {
   margin-right: auto;
@@ -88,12 +91,21 @@ ul.ListDispProps {
 .DDMenuWrap {
   position: absolute;
   cursor: pointer;
-  border-width: 1px;
+  z-index: 1;
+  border-width: 0.5px;
   border-style: solid;
-  border-color: black;
+  border-color: #cfcfcf;
+  box-shadow: 0.2vw 0.2vw #6b6b6b;
   background-color: white;
 }
 
 .DDMenuContent {
+  width: 10vw;
   font-weight: normal;
+  font-size: calc(10px + 1vmin);
+  transition: .3s;
+}
+
+.DDMenuContent:hover {
+  background-color: #cfcfcf;
 }
