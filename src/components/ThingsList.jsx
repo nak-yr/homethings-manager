@@ -1,4 +1,5 @@
 import React from 'react';
+import DDMenu from './DDMenu';
 import '../App.css';
 
 class ThingsList extends React.Component {
@@ -45,11 +46,12 @@ class ThingsList extends React.Component {
             <div>
                 <ul className="ListDispWhole">
                     {this.state.thingsList.map((thing, index) =>
-                        <li key={index} className="ListDispThing">{thing.name}
+                        <li key={index} className="ListDispThing">{thing.name} 
                             <ul className="ListDispProps">
                                 <li>Location : {thing.location}</li>
                                 <li>Memo : {thing.memo}</li>
                             </ul>
+                            <DDMenu />
                         </li>
                         )
                     }

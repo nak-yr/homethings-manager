@@ -74,3 +74,26 @@ ul.ListDispProps {
   border-style: solid;
   border-color: #6b6b6b;
 }
+
+.DDMenu {
+  position: relative;
+}
+
+.OptionButton {
+  font-weight: bold;
+  display: inline;
+  cursor: pointer;
+}
+
+.DDMenuWrap {
+  position: absolute;
+  cursor: pointer;
+  border-width: 1px;
+  border-style: solid;
+  border-color: black;
+  background-color: white;
+}
+
+.DDMenuContent {
+  font-weight: normal;
+}
