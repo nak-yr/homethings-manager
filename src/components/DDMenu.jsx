@@ -15,7 +15,7 @@ class DDMenu extends React.Component {
         }))
     }
 
-    hundleClick (val) {
+    handleClick (val) {
         this.setState({
             listIsOpen: false,
         })
@@ -29,10 +29,10 @@ class DDMenu extends React.Component {
                 <div className="OptionButton" onClick={this.toggleList.bind(this)} >︙</div>
                 {listIsOpen && (
                     <div className="DDMenuWrap">
-                        <div className="DDMenuContent" onClick={this.hundleClick.bind(this, "機能は後日実装予定")}>
+                        <div className="DDMenuContent" onClick={this.handleClick.bind(this, "機能は後日実装予定")}>
                             編集
                         </div>
-                        <div className="DDMenuContent" onClick={this.hundleClick.bind(this, "機能は後日実装予定")}>
+                        <div className="DDMenuContent" onClick={this.handleClick.bind(this, "機能は後日実装予定")}>
                             削除
                         </div>
                     </div>

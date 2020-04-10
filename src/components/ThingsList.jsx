@@ -1,5 +1,5 @@
 import React from 'react';
-import DDMenu from './DDMenu';
+import DDMenuBootstrap from './DDMenuBootstrap';
 import '../App.css';
 
 class ThingsList extends React.Component {
@@ -51,7 +51,7 @@ class ThingsList extends React.Component {
                                 <li>Location : {thing.location}</li>
                                 <li>Memo : {thing.memo}</li>
                             </ul>
-                            <DDMenu />
+                            <DDMenuBootstrap />
                         </li>
                         )
                     }
