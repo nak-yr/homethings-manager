@@ -1,5 +1,5 @@
 import React from 'react';
-import DDMenuBootstrap from './DDMenuBootstrap';
+import AccordionDisp from './AccordionDisp';
 import '../App.css';
 
 class ThingsList extends React.Component {
@@ -37,22 +37,18 @@ class ThingsList extends React.Component {
                 }
             }>
                 <label>
-                    Name<input id="name" placeholder="追加したいものの名前" />
-                    Location<input id="location" placeholder="追加したいものを置く場所" />
-                    Memo<input id="memo" placeholder="備考" />
+                    Name<input id="name" placeholder="追加したいものの名前" required/>
+                    Location<input id="location" placeholder="追加したいものを置く場所" required/>
+                    Memo<input id="memo" placeholder="備考" required/>
                 </label>
                 <input type="submit" value="リストに追加"/>
             </form>
             <div>
                 <ul className="ListDispWhole">
-                    {this.state.thingsList.map((thing, index) =>
-                        <li key={index} className="ListDispThing">{thing.name} 
-                            <ul className="ListDispProps">
-                                <li>Location : {thing.location}</li>
-                                <li>Memo : {thing.memo}</li>
-                            </ul>
-                            <DDMenuBootstrap />
-                        </li>
+                    {this.state.thingsList.map( thing =>
+                        <>
+                        <AccordionDisp name={thing.name} location={thing.location} memo={thing.memo} />
+                        </>
                         )
                     }
                 </ul>

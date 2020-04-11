@@ -22,6 +22,7 @@ ul {
 li {
   display: flex;
   flex-direction: row;
+  word-break: break-word;
 }
 ul.ListDispWhole {
   margin: auto;
@@ -76,4 +77,35 @@ ul.ListDispProps {
   border-width: 1px;
   border-style: solid;
   border-color: #6b6b6b;
+}
+
+.ThingName {
+  font-weight: bold;
+  font-size: calc(10px + 2vmin);
+}
+.ThingChild {
+  font-size: calc(10px + 1vmin);
+}
+
+.AccordContent {
+  width: 80vw;
+  margin: auto;
+  cursor: pointer;
+}
+
+.card {
+  margin-right: auto;
+  padding: 3vmin;
+  margin: 2vmin;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #6b6b6b;
+  transition: .3s;
+}
+.card:hover {
+  border-width: 1px;
+  box-shadow: 0.5vw 0.5vw #6b6b6b;
+}
+.card-header {
+  background-color: white;
 }
