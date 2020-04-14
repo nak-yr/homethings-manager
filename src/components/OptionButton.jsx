@@ -6,25 +6,37 @@ class OptionButton extends React.Component {
     constructor(){
         super();
         this.state = {
-            show: false,
+            showEdit: false,
+            showDelete: false,
         }
     }
 
     handleClickEdit () {
-        this.setState({show: !this.state.show});
+        this.setState({showEdit: true});
+    }
+
+    handleClickDelete () {
+        this.setState({showDelete: true});
+    }
+
+    handleClickDeleteConfirm () {
+        this.props.children = [];
     }
 
     handleClose () {
-        this.setState({show: !this.state.show});
+        this.setState({
+            showEdit: false,
+            showDelete: false,
+        });
     }
 
     render() {
         return (
             <>
             <Button variant="outline-secondary" onClick={this.handleClickEdit.bind(this)}>このカードを編集</Button>{' '}
-            <Button variant="outline-danger">このカードを削除</Button>
+            <Button variant="outline-danger" onClick={this.handleClickDelete.bind(this)}>このカードを削除</Button>
 
-            <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
+            <Modal show={this.state.showEdit} onHide={this.handleClose.bind(this)}>
             <Modal.Header closeButton>
                 <Modal.Title>編集・削除機能</Modal.Title>
             </Modal.Header>
@@ -32,6 +44,21 @@ class OptionButton extends React.Component {
             <Modal.Footer>
                 <Button variant="outline-secondary" onClick={this.handleClose.bind(this)}>
                 OK
+                </Button>
+            </Modal.Footer>
+            </Modal>
+
+            <Modal show={this.state.showDelete} onHide={this.handleClose.bind(this)}>
+            <Modal.Header closeButton>
+                <Modal.Title>削除確認</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>本当にこのカードを削除しますか？</Modal.Body>
+            <Modal.Footer>
+                <Button variant="outline-danger" onClick={this.handleClickDeleteConfirm.bind(this)}>
+                削除
+                </Button>
+                <Button variant="outline-secondary" onClick={this.handleClose.bind(this)}>
+                キャンセル
                 </Button>
             </Modal.Footer>
             </Modal>
