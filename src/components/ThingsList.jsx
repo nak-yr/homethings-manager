@@ -1,5 +1,6 @@
 import React from 'react';
 import {Accordion, Card, Button, Modal, Form} from 'react-bootstrap';
+import HelpContent from './HelpContent'
 import '../App.css';
 
 class ThingsList extends React.Component {
@@ -15,15 +16,6 @@ class ThingsList extends React.Component {
         this.setState({showEdit: true});
     }
 
-    handleSubmit (e) {
-        e.preventDefault();
-        let eName = e.currentTarget.elements["formBasicName"];
-        console.log(eName.value);
-        this.setState({
-            showEdit: false,
-        })
-    }
-
     handleClickDelete (thing) {
         this.setState({
             thingsList: this.state.thingsList.filter(list => list !== thing)
@@ -37,12 +29,11 @@ class ThingsList extends React.Component {
     render () {
         return (
             <>
-            <form className="AddingForm" onSubmit={
-                event => {event.preventDefault();
-
-                const nameElement = event.currentTarget.elements["name"];
-                const locationElement = event.currentTarget.elements["location"];
-                const memoElement = event.currentTarget.elements["memo"]
+            <Form className="AddingForm" onSubmit={e => {
+                e.preventDefault();
+                const nameElement = e.currentTarget.elements["formInputName"];
+                const locationElement = e.currentTarget.elements["formInputLocation"];
+                const memoElement = e.currentTarget.elements["formInputMemo"]
                 this.setState(
                     {
                     thingsList: this.state.thingsList.concat({
@@ -58,15 +49,26 @@ class ThingsList extends React.Component {
                     memoElement.value = "";
                     }
                 )
-                }
+            }
             }>
-                <label>
-                    Name<input id="name" placeholder="追加したいものの名前" required/>
-                    Location<input id="location" placeholder="追加したいものを置く場所" required/>
-                    Memo<input id="memo" placeholder="備考" required/>
-                </label>
-                <input type="submit" value="リストに追加"/>
-            </form>
+                <Form.Group controlId="formInputName" >
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control type="name" placeholder="追加したいものの名前" required />
+                </Form.Group>
+                <Form.Group controlId="formInputLocation">
+                    <Form.Label>Location</Form.Label>
+                    <Form.Control type="location" placeholder="追加したいものを置く場所" required />
+                </Form.Group>
+                <Form.Group controlId="formInputMemo">
+                    <Form.Label>Memo</Form.Label>
+                    <Form.Control type="memo" placeholder="備考" required />
+                </Form.Group>
+                <Button variant="outline-success" type="submit">
+                    リストに追加
+                </Button>{' '}
+                <HelpContent />
+            </Form>
+
             <div>
                 <ul className="ListDispWhole">
                     {this.state.thingsList.map( (thing, index) =>
@@ -91,37 +93,36 @@ class ThingsList extends React.Component {
                                         <Modal.Body>
                                         <Form onSubmit={e => {
                                             e.preventDefault();
-                                            const eName = e.currentTarget.elements["formBasicName"];
-                                            const eLocation = e.currentTarget.elements["formBasicLocation"];
-                                            const eMemo = e.currentTarget.elements["formBasicMemo"];
+                                            const eName = e.currentTarget.elements["formChangeName"];
+                                            const eLocation = e.currentTarget.elements["formChangeLocation"];
+                                            const eMemo = e.currentTarget.elements["formChangeMemo"];
                                             thing.name = eName.value;
                                             thing.location = eLocation.value;
                                             thing.memo = eMemo.value;
                                             this.setState({showEdit: false});
                                         }
                                         }>
-                                            <Form.Group controlId="formBasicName">
+                                            <Form.Group controlId="formChangeName" >
                                                 <Form.Label>Name</Form.Label>
-                                                <Form.Control type="name" placeholder="変更後の名前を入力" value={thing.name} />
+                                                <Form.Control type="name" placeholder={thing.name} required />
                                             </Form.Group>
-                                            <Form.Group controlId="formBasicLocation">
+                                            <Form.Group controlId="formChangeLocation">
                                                 <Form.Label>Location</Form.Label>
-                                                <Form.Control type="location" placeholder="変更後の場所を入力" value={thing.location} />
+                                                <Form.Control type="location" placeholder={thing.location} />
                                             </Form.Group>
-                                            <Form.Group controlId="formBasicMemo">
+                                            <Form.Group controlId="formChangeMemo">
                                                 <Form.Label>Memo</Form.Label>
-                                                <Form.Control type="memo" placeholder="変更後のメモを入力" value={thing.memo} />
+                                                <Form.Control type="memo" placeholder={thing.memo} />
                                             </Form.Group>
                                             <Button variant="outline-success" type="submit">
                                                 変更を適用
                                             </Button>
+                                            <Button variant="outline-secondary" type="submit">
+                                                キャンセル
+                                            </Button>
                                             </Form>
                                         </Modal.Body>
-                                        <Modal.Footer>
-                                            <Button variant="outline-secondary" onClick={this.handleClose.bind(this)}>
-                                            OK
-                                            </Button>
-                                        </Modal.Footer>
+                                        <Modal.Footer />
                                         </Modal>
                                     </Card.Body>
                                 </Accordion.Collapse>

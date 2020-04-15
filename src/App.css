@@ -109,3 +109,8 @@ ul.ListDispProps {
 .card-header {
   background-color: white;
 }
+
+.form-control {
+  margin: auto;
+  width: 70%;
+}
