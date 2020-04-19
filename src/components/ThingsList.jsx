@@ -71,7 +71,7 @@ class ThingsList extends React.Component {
 
             <div>
                 <ul className="ListDispWhole">
-                    {this.state.thingsList.map( (thing, index) =>
+                    {this.state.thingsList.map(thing =>
                         <Accordion className="AccordContent">
                             <Card>
                                 <Accordion.Toggle as={Card.Header} eventKey="0">
@@ -80,6 +80,7 @@ class ThingsList extends React.Component {
                                         <li key={thing.location.toString() + "L"} className="ThingChild">Location : {thing.location}</li>
                                         <li key={thing.memo.toString() + "M"} className="ThingChild">Memo : {thing.memo}</li>
                                     </ul>
+                                    ・・・
                                 </Accordion.Toggle>
                                 <Accordion.Collapse eventKey="0">
                                     <Card.Body>
@@ -96,15 +97,15 @@ class ThingsList extends React.Component {
                                             const eName = e.currentTarget.elements["formChangeName"];
                                             const eLocation = e.currentTarget.elements["formChangeLocation"];
                                             const eMemo = e.currentTarget.elements["formChangeMemo"];
-                                            thing.name = eName.value;
-                                            thing.location = eLocation.value;
-                                            thing.memo = eMemo.value;
+                                            if(eName.value !== "") thing.name = eName.value;
+                                            if(eLocation.value !== "") thing.location = eLocation.value;
+                                            if(eMemo.value !== "") thing.memo = eMemo.value;
                                             this.setState({showEdit: false});
                                         }
                                         }>
                                             <Form.Group controlId="formChangeName" >
                                                 <Form.Label>Name</Form.Label>
-                                                <Form.Control type="name" placeholder={thing.name} required />
+                                                <Form.Control type="name" placeholder={thing.name} />
                                             </Form.Group>
                                             <Form.Group controlId="formChangeLocation">
                                                 <Form.Label>Location</Form.Label>
