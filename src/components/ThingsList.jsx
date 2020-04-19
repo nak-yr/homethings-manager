@@ -76,9 +76,9 @@ class ThingsList extends React.Component {
                             <Card>
                                 <Accordion.Toggle as={Card.Header} eventKey="0">
                                     <ul className="ListDispWhole">
-                                        <li key={thing.name.toString()} className="ThingName">{thing.name}</li>
-                                        <li key={thing.location.toString()} className="ThingChild">Location : {thing.location}</li>
-                                        <li key={thing.memo.toString()} className="ThingChild">Memo : {thing.memo}</li>
+                                        <li key={thing.name.toString() + "N"} className="ThingName">{thing.name}</li>
+                                        <li key={thing.location.toString() + "L"} className="ThingChild">Location : {thing.location}</li>
+                                        <li key={thing.memo.toString() + "M"} className="ThingChild">Memo : {thing.memo}</li>
                                     </ul>
                                 </Accordion.Toggle>
                                 <Accordion.Collapse eventKey="0">
