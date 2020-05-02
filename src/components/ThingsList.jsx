@@ -12,16 +12,25 @@ class ThingsList extends React.Component {
         };
     }
 
+    //詳細設定ボタンがクリックされた時の動作
+    handleClickExtra (e) {
+        e.preventDefault();
+        alert("hogehoge")
+    }
+
+    //カード内の「編集」ボタンが表示された場合は、専用モーダルを表示する
     handleClickEdit () {
         this.setState({showEdit: true});
     }
 
+    //カード内の「削除」ボタンがクリックされた場合は、filter関数で当該カードの内容を削除する
     handleClickDelete (thing) {
         this.setState({
             thingsList: this.state.thingsList.filter(list => list !== thing)
         })
     }
 
+    //モーダル内の「閉じる」ボタンがクリックされた場合は、モーダルを閉じる
     handleClose () {
         this.setState({showEdit: false});
     }
@@ -65,6 +74,9 @@ class ThingsList extends React.Component {
                 </Form.Group>
                 <Button variant="outline-success" type="submit">
                     リストに追加
+                </Button>{' '}
+                <Button variant="outline-secondary" type="extra" onClick={this.handleClickExtra.bind(this)}>
+                    詳細設定
                 </Button>{' '}
                 <HelpContent />
             </Form>
