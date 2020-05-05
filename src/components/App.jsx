@@ -1,7 +1,7 @@
 import React from 'react';
-import './App.css';
-import UserInterface from './components/UserInterface';
-import ThingsList from './components/ThingsList';
+import '../App.css';
+import UserInterface from './UserInterface';
+import ThingsList from './ThingsList';
 
 function App() {
   return (

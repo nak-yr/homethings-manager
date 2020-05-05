@@ -1,15 +1,25 @@
-import { ADD, EDIT, REMOVE } from '../actions'
+import { ADD, EDIT, REMOVE, LOAD } from '../actions'
 
-const initialState = { thingsList: [], showEdit: false }
+const initialState = { 
+    thingsList: [ { name:'foo', location: 'bar', memo:'baz' } ]
+}
 
 export default (state = initialState, action) => {
     switch (action.type) {
         case ADD:
-            return alert('ADD')
+            alert('ADD')
+            return state
         case EDIT:
-            return alert('EDIT')
+            return ({
+                thingsList: state.thingsList
+            })
         case REMOVE:
-            return alert('REMOVE')
+            alert('REMOVE')
+            return state
+        case LOAD:
+            return ({
+                thingsList: state.thingsList
+            })
         default:
             return state
     }
