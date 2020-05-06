@@ -8,10 +8,6 @@ import { add, edit, remove, close, load } from '../actions';
 
 class ThingsList extends React.Component {
 
-    componentDidUpdate () {
-        this.props.load()
-    }
-
     //カード内の「編集」ボタンが表示された場合は、専用モーダルを表示する
     handleClickEdit () {
         this.setState({showEdit: true});
@@ -22,11 +18,6 @@ class ThingsList extends React.Component {
         this.setState({
             thingsList: this.state.thingsList.filter(list => list !== thing)
         })
-    }
-
-    //モーダル内の「閉じる」ボタンがクリックされた場合は、モーダルを閉じる
-    handleClose () {
-        this.setState({showEdit: false});
     }
 
     render () {
@@ -70,68 +61,66 @@ class ThingsList extends React.Component {
                 <HelpContent />
             </Form>
 
-            <div>
-                <ul className="ListDispWhole">
-                    {props.thingsList.map(thing =>
-                        <Accordion className="AccordContent">
-                            <Card>
-                                <Accordion.Toggle as={Card.Header} eventKey="0">
-                                    <ul className="ListDispWhole">
-                                        <li key={thing.name.toString() + "N"} className="ThingName">{thing.name}</li>
-                                        <li key={thing.location.toString() + "L"} className="ThingChild">Location : {thing.location}</li>
-                                        <li key={thing.memo.toString() + "M"} className="ThingChild">Memo : {thing.memo}</li>
-                                    </ul>
-                                    ・・・
-                                </Accordion.Toggle>
-                                <Accordion.Collapse eventKey="0">
-                                    <Card.Body>
-                                        <Button variant="outline-secondary" onClick={props.edit}>このカードを編集</Button>{' '}
-                                        <Button variant="outline-danger" onClick={props.remove}>このカードを削除</Button>
+            <div className="ListDispWhole">
+                {props.thingsList.map( (thing, index) =>
+                    <Accordion className="AccordContent">
+                        <Card>
+                            <Accordion.Toggle as={Card.Header} eventKey="0">
+                                <ul className="ListDispWhole" key={thing.id}>
+                                    <li key={thing.name.id} className="ThingName">{thing.name}</li>
+                                    <li key={thing.location.id} className="ThingChild">Location : {thing.location}</li>
+                                    <li key={thing.memo.id} className="ThingChild">Memo : {thing.memo}</li>
+                                </ul>
+                                ・・・
+                            </Accordion.Toggle>
+                            <Accordion.Collapse eventKey="0">
+                                <Card.Body>
+                                    <Button variant="outline-secondary" onClick={props.edit.bind(this)}>このカードを編集</Button>{' '}
+                                    <Button variant="outline-danger" onClick={props.remove}>このカードを削除</Button>
 
-                                        <Modal show={props.showEdit} onHide={props.close}>
-                                        <Modal.Header closeButton>
-                                            <Modal.Title>カードを編集</Modal.Title>
-                                        </Modal.Header>
-                                        <Modal.Body>
-                                        <Form onSubmit= {e => {
-                                            e.preventDefault();
-                                            const eName = e.currentTarget.elements["formChangeName"];
-                                            const eLocation = e.currentTarget.elements["formChangeLocation"];
-                                            const eMemo = e.currentTarget.elements["formChangeMemo"];
-                                            if(eName.value !== "") thing.name = eName.value;
-                                            if(eLocation.value !== "") thing.location = eLocation.value;
-                                            if(eMemo.value !== "") thing.memo = eMemo.value;
-                                        }
-                                        }>
-                                            <Form.Group controlId="formChangeName" >
-                                                <Form.Label>Name</Form.Label>
-                                                <Form.Control type="name" placeholder={thing.name} />
-                                            </Form.Group>
-                                            <Form.Group controlId="formChangeLocation">
-                                                <Form.Label>Location</Form.Label>
-                                                <Form.Control type="location" placeholder={thing.location} />
-                                            </Form.Group>
-                                            <Form.Group controlId="formChangeMemo">
-                                                <Form.Label>Memo</Form.Label>
-                                                <Form.Control type="memo" placeholder={thing.memo} />
-                                            </Form.Group>
-                                            <Button variant="outline-success" type="submit" onClick={props.close}>
-                                                変更を適用
-                                            </Button>
-                                            <Button variant="outline-secondary" type="submit" onClick={props.close}>
-                                                キャンセル
-                                            </Button>
-                                            </Form>
-                                        </Modal.Body>
-                                        <Modal.Footer />
-                                        </Modal>
-                                    </Card.Body>
-                                </Accordion.Collapse>
-                            </Card>
-                        </Accordion>
-                        )
-                    }
-                </ul>
+                                    <Modal show={props.showEdit} onHide={props.close}>
+                                    <Modal.Header closeButton>
+                                        <Modal.Title>カードを編集</Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                    <Form onSubmit= {e => {
+                                        e.preventDefault();
+                                        const eName = e.currentTarget.elements["formChangeName"];
+                                        const eLocation = e.currentTarget.elements["formChangeLocation"];
+                                        const eMemo = e.currentTarget.elements["formChangeMemo"];
+                                        if(eName.value !== "") thing.name = eName.value;
+                                        if(eLocation.value !== "") thing.location = eLocation.value;
+                                        if(eMemo.value !== "") thing.memo = eMemo.value;
+                                    }
+                                    }>
+                                        <Form.Group controlId="formChangeName" >
+                                            <Form.Label>Name</Form.Label>
+                                            <Form.Control type="name" placeholder={thing.name} />
+                                        </Form.Group>
+                                        <Form.Group controlId="formChangeLocation">
+                                            <Form.Label>Location</Form.Label>
+                                            <Form.Control type="location" placeholder={thing.location} />
+                                        </Form.Group>
+                                        <Form.Group controlId="formChangeMemo">
+                                            <Form.Label>Memo</Form.Label>
+                                            <Form.Control type="memo" placeholder={thing.memo} />
+                                        </Form.Group>
+                                        <Button variant="outline-success" type="submit">
+                                            変更を適用
+                                        </Button>
+                                        <Button variant="outline-secondary" type="button" onClick={props.close}>
+                                            閉じる
+                                        </Button>
+                                        </Form>
+                                    </Modal.Body>
+                                    <Modal.Footer />
+                                    </Modal>
+                                </Card.Body>
+                            </Accordion.Collapse>
+                        </Card>
+                    </Accordion>
+                    )
+                }
             </div>
             </>
         )

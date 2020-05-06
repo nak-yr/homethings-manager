@@ -12,8 +12,9 @@ export const edit = () => ({
     type: EDIT
 })
 
-export const remove = () => ({
-    type: REMOVE
+export const remove = ( thing ) => ({
+    type: REMOVE,
+    thing
 })
 
 export const close = () => ({

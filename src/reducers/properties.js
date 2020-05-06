@@ -10,16 +10,12 @@ export default (state = initialState, action) => {
             alert('ADD')
             return state
         case EDIT:
-            return ({
-                thingsList: state.thingsList
-            })
+            return ({ thingsList: state.thingsList })
         case REMOVE:
-            alert('REMOVE')
+            //return ({ thingsList: state.thingsList.filter(list => list !== thing) })
             return state
         case LOAD:
-            return ({
-                thingsList: state.thingsList
-            })
+            return ({ thingsList: state.thingsList })
         default:
             return state
     }
