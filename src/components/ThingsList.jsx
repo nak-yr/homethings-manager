@@ -7,19 +7,6 @@ import '../App.css';
 import { add, edit, remove, close } from '../actions';
 
 class ThingsList extends React.Component {
-
-    //カード内の「編集」ボタンが表示された場合は、専用モーダルを表示する
-    handleClickEdit () {
-        this.setState({showEdit: true});
-    }
-
-    //カード内の「削除」ボタンがクリックされた場合は、filter関数で当該カードの内容を削除する
-    handleClickDelete (thing) {
-        this.setState({
-            thingsList: this.state.thingsList.filter(list => list !== thing)
-        })
-    }
-
     render () {
         const props = this.props; 
         return (
@@ -29,23 +16,35 @@ class ThingsList extends React.Component {
                 const nameElement = e.currentTarget.elements["formInputName"];
                 const locationElement = e.currentTarget.elements["formInputLocation"];
                 const memoElement = e.currentTarget.elements["formInputMemo"];
-                props.add(nameElement, locationElement, memoElement);
+                const numElement = e.currentTarget.elements["formInputNum"];
+                props.add(nameElement, locationElement, memoElement, numElement);
                 // stateの変更後に入力した値を空にする
                 nameElement.value = "";
                 locationElement.value = "";
                 memoElement.value = "";            
+                numElement.value = 1;            
             }}>
                 <Form.Group controlId="formInputName" >
                     <Form.Label>Name</Form.Label>
-                    <Form.Control type="name" placeholder="追加したいものの名前" required />
+                    <Form.Control type="name" placeholder="ものの名前" required />
                 </Form.Group>
                 <Form.Group controlId="formInputLocation">
                     <Form.Label>Location</Form.Label>
-                    <Form.Control type="location" placeholder="追加したいものを置く場所" required />
+                    <Form.Control type="location" placeholder="置く場所" required />
                 </Form.Group>
                 <Form.Group controlId="formInputMemo">
                     <Form.Label>Memo</Form.Label>
-                    <Form.Control type="memo" placeholder="備考" required />
+                    <Form.Control type="memo" placeholder="メモ" required />
+                    <Form.Group controlId="formInputNum">
+                        <Form.Label>Number</Form.Label>
+                        <Form.Control as="select">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        </Form.Control>
+                    </Form.Group>
                 </Form.Group>
                 <Button variant="outline-success" type="submit">
                     リストに追加
@@ -59,7 +58,7 @@ class ThingsList extends React.Component {
                         <Card>
                             <Accordion.Toggle as={Card.Header} eventKey="0">
                                 <ul className="ListDispWhole" key={thing.id}>
-                                    <li key={thing.name.id} className="ThingName">{thing.name}</li>
+                                    <li key={thing.name.id} className="ThingName">{thing.name}   ×{thing.num}</li>
                                     <li key={thing.location.id} className="ThingChild">Location : {thing.location}</li>
                                     <li key={thing.memo.id} className="ThingChild">Memo : {thing.memo}</li>
                                 </ul>
@@ -122,7 +121,7 @@ class ThingsList extends React.Component {
 const mapStateToProps = state => ( {thingsList: state.properties.thingsList, showEdit: state.modal.showEdit} )
 
 const mapDispatchToProps = dispatch => ( {
-    add: (newName, newLocation, newMemo) => dispatch(add(newName, newLocation, newMemo)),
+    add: (name, location, memo, num) => dispatch(add(name, location, memo, num)),
     edit: () => dispatch(edit()),
     remove: (thing) => dispatch(remove(thing)),
     close: () => dispatch(close()),
