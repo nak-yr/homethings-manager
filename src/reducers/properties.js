@@ -1,21 +1,22 @@
-import { ADD, EDIT, REMOVE, LOAD } from '../actions'
+import { ADD, EDIT, REMOVE } from '../actions'
 
 const initialState = { 
     thingsList: [ { name:'foo', location: 'bar', memo:'baz' } ]
 }
 
 export default (state = initialState, action) => {
-    switch (action.type) {
+    const { type, newName, newLocation, newMemo, removeThing} = action
+    switch (type) {
         case ADD:
-            alert('ADD')
-            return state
+            return ({ thingsList: state.thingsList.concat({
+                name: newName.value,
+                location: newLocation.value,
+                memo: newMemo.value
+            })})
         case EDIT:
-            return ({ thingsList: state.thingsList })
-        case REMOVE:
-            //return ({ thingsList: state.thingsList.filter(list => list !== thing) })
             return state
-        case LOAD:
-            return ({ thingsList: state.thingsList })
+        case REMOVE:
+            return ({ thingsList: state.thingsList.filter(list => list !== removeThing) })
         default:
             return state
     }

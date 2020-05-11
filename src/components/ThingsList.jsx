@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import HelpContent from './HelpContent';
 import '../App.css';
 
-import { add, edit, remove, close, load } from '../actions';
+import { add, edit, remove, close } from '../actions';
 
 class ThingsList extends React.Component {
 
@@ -21,28 +21,20 @@ class ThingsList extends React.Component {
     }
 
     render () {
-        const props = this.props;
+        const props = this.props; 
         return (
             <>
             <Form className="AddingForm" onSubmit={e => {
                 e.preventDefault();
                 const nameElement = e.currentTarget.elements["formInputName"];
                 const locationElement = e.currentTarget.elements["formInputLocation"];
-                const memoElement = e.currentTarget.elements["formInputMemo"]
-                props.thingsList.concat({
-                        name: nameElement.value,
-                        location: locationElement.value,
-                        memo: memoElement.value
-                    },
-                    // stateの変更後に入力した値を空にする
-                    () => {
-                    nameElement.value = "";
-                    locationElement.value = "";
-                    memoElement.value = "";
-                    }
-                )
-            }
-            }>
+                const memoElement = e.currentTarget.elements["formInputMemo"];
+                props.add(nameElement, locationElement, memoElement);
+                // stateの変更後に入力した値を空にする
+                nameElement.value = "";
+                locationElement.value = "";
+                memoElement.value = "";            
+            }}>
                 <Form.Group controlId="formInputName" >
                     <Form.Label>Name</Form.Label>
                     <Form.Control type="name" placeholder="追加したいものの名前" required />
@@ -76,7 +68,7 @@ class ThingsList extends React.Component {
                             <Accordion.Collapse eventKey="0">
                                 <Card.Body>
                                     <Button variant="outline-secondary" onClick={props.edit.bind(this)}>このカードを編集</Button>{' '}
-                                    <Button variant="outline-danger" onClick={props.remove}>このカードを削除</Button>
+                                    <Button variant="outline-danger" onClick={props.remove.bind(this, thing)}>このカードを削除</Button>
 
                                     <Modal show={props.showEdit} onHide={props.close}>
                                     <Modal.Header closeButton>
@@ -128,12 +120,12 @@ class ThingsList extends React.Component {
 }
 
 const mapStateToProps = state => ( {thingsList: state.properties.thingsList, showEdit: state.modal.showEdit} )
+
 const mapDispatchToProps = dispatch => ( {
-    add: () => dispatch(add()),
+    add: (newName, newLocation, newMemo) => dispatch(add(newName, newLocation, newMemo)),
     edit: () => dispatch(edit()),
-    remove: () => dispatch(remove()),
+    remove: (thing) => dispatch(remove(thing)),
     close: () => dispatch(close()),
-    load: () => dispatch(load()),
 } )
 
 export default connect(mapStateToProps, mapDispatchToProps)(ThingsList)

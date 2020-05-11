@@ -2,10 +2,12 @@ export const ADD = 'ADD'
 export const EDIT = 'EDIT'
 export const REMOVE = 'REMOVE'
 export const CLOSE = `CLOSE`
-export const LOAD = `LOAD`
 
-export const add = () => ({
-    type: ADD
+export const add = ( nameElement, locationElement, memoElement ) => ({
+    type: ADD,
+    newName: nameElement,
+    newLocation: locationElement,
+    newMemo: memoElement
 })
 
 export const edit = () => ({
@@ -14,13 +16,9 @@ export const edit = () => ({
 
 export const remove = ( thing ) => ({
     type: REMOVE,
-    thing
+    removeThing: thing
 })
 
 export const close = () => ({
     type: CLOSE
-})
-
-export const load = () => ({
-    type: LOAD
 })
