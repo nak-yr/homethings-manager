@@ -6,6 +6,33 @@ import '../App.css';
 
 import { add, edit, remove, close } from '../actions';
 
+const inputForms = (
+    <>
+    <Form.Group controlId="formInputName" >
+        <Form.Label>Name</Form.Label>
+        <Form.Control type="name" placeholder="ものの名前" required />
+    </Form.Group>
+    <Form.Group controlId="formInputLocation">
+        <Form.Label>Location</Form.Label>
+        <Form.Control type="location" placeholder="置く場所" required />
+    </Form.Group>
+    <Form.Group controlId="formInputMemo">
+        <Form.Label>Memo</Form.Label>
+        <Form.Control type="memo" placeholder="メモ" required />
+    </Form.Group>
+    <Form.Group controlId="formInputNum">
+        <Form.Label>Number</Form.Label>
+        <Form.Control as="select">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        </Form.Control>
+    </Form.Group>
+    </>
+);
+
 class ThingsList extends React.Component {
     render () {
         const props = this.props; 
@@ -24,28 +51,7 @@ class ThingsList extends React.Component {
                 memoElement.value = "";            
                 numElement.value = 1;            
             }}>
-                <Form.Group controlId="formInputName" >
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control type="name" placeholder="ものの名前" required />
-                </Form.Group>
-                <Form.Group controlId="formInputLocation">
-                    <Form.Label>Location</Form.Label>
-                    <Form.Control type="location" placeholder="置く場所" required />
-                </Form.Group>
-                <Form.Group controlId="formInputMemo">
-                    <Form.Label>Memo</Form.Label>
-                    <Form.Control type="memo" placeholder="メモ" required />
-                </Form.Group>
-                <Form.Group controlId="formInputNum">
-                    <Form.Label>Number</Form.Label>
-                    <Form.Control as="select">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    </Form.Control>
-                </Form.Group>
+                {inputForms}
                 <Button variant="outline-success" type="submit">
                     リストに追加
                 </Button>{' '}
@@ -110,8 +116,8 @@ class ThingsList extends React.Component {
                                             </Form.Control>
                                         </Form.Group>
                                         <Button variant="outline-success" type="submit">
-                                            変更を適用
-                                        </Button>
+                                            変更
+                                        </Button>{' '}
                                         <Button variant="outline-secondary" type="button" onClick={props.close}>
                                             閉じる
                                         </Button>

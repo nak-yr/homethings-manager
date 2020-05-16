@@ -1,4 +1,4 @@
-import { ADD, EDIT, REMOVE } from '../actions'
+import { ADD, REMOVE } from '../actions'
 
 //reducerではactionsでプロトタイピングした動作の内容を記述する
 //初期値はinitialStateとして定義
@@ -11,7 +11,7 @@ export default (state = initialState, action) => {
     const { type, newName, newLocation, newMemo, newNum, removeThing} = action
     //actionの種類によって動作を分ける
     switch (type) {
-        //ADDなら、フォームの入力値であるnewName/newLocation/newMemoをthingsListに追加する
+        //ADDなら、フォームの入力値であるnewName,newLocation,newMemo,newNumをthingsListに追加する
         case ADD:
             console.log(newNum.value)
             return ({ thingsList: state.thingsList.concat({
@@ -20,8 +20,6 @@ export default (state = initialState, action) => {
                 memo: newMemo.value,
                 num: parseInt(newNum.value, 10),
             })})
-        case EDIT:
-            return state
         //REMOVEなら、削除するリストであるremoveThing(引数として渡されている)をfilterする
         case REMOVE:
             return ({ thingsList: state.thingsList.filter(list => list !== removeThing) })
