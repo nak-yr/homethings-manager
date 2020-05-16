@@ -35,16 +35,16 @@ class ThingsList extends React.Component {
                 <Form.Group controlId="formInputMemo">
                     <Form.Label>Memo</Form.Label>
                     <Form.Control type="memo" placeholder="メモ" required />
-                    <Form.Group controlId="formInputNum">
-                        <Form.Label>Number</Form.Label>
-                        <Form.Control as="select">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        </Form.Control>
-                    </Form.Group>
+                </Form.Group>
+                <Form.Group controlId="formInputNum">
+                    <Form.Label>Number</Form.Label>
+                    <Form.Control as="select">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    </Form.Control>
                 </Form.Group>
                 <Button variant="outline-success" type="submit">
                     リストに追加
@@ -66,8 +66,8 @@ class ThingsList extends React.Component {
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey="0">
                                 <Card.Body>
-                                    <Button variant="outline-secondary" onClick={props.edit.bind(this)}>このカードを編集</Button>{' '}
-                                    <Button variant="outline-danger" onClick={props.remove.bind(this, thing)}>このカードを削除</Button>
+                                    <Button variant="outline-secondary" onClick={props.edit.bind(this)}>編集</Button>{' '}
+                                    <Button variant="outline-danger" onClick={props.remove.bind(this, thing)}>削除</Button>
 
                                     <Modal show={props.showEdit} onHide={props.close}>
                                     <Modal.Header closeButton>
@@ -79,9 +79,12 @@ class ThingsList extends React.Component {
                                         const eName = e.currentTarget.elements["formChangeName"];
                                         const eLocation = e.currentTarget.elements["formChangeLocation"];
                                         const eMemo = e.currentTarget.elements["formChangeMemo"];
+                                        const eNum = e.currentTarget.elements["formChangeNum"];
                                         if(eName.value !== "") thing.name = eName.value;
                                         if(eLocation.value !== "") thing.location = eLocation.value;
                                         if(eMemo.value !== "") thing.memo = eMemo.value;
+                                        thing.num = eNum.value;
+                                        props.close();
                                     }
                                     }>
                                         <Form.Group controlId="formChangeName" >
@@ -95,6 +98,16 @@ class ThingsList extends React.Component {
                                         <Form.Group controlId="formChangeMemo">
                                             <Form.Label>Memo</Form.Label>
                                             <Form.Control type="memo" placeholder={thing.memo} />
+                                        </Form.Group>
+                                        <Form.Group controlId="formChangeNum">
+                                            <Form.Label>Number</Form.Label>
+                                            <Form.Control as="select">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            </Form.Control>
                                         </Form.Group>
                                         <Button variant="outline-success" type="submit">
                                             変更を適用
