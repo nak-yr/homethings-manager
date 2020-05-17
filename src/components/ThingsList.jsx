@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import HelpContent from './HelpContent';
 import '../App.css';
 
-import { add, edit, remove, close } from '../actions';
+import { add, edit, remove, close, readThings } from '../actions';
 
 const inputForms = (
     <>
@@ -34,6 +34,11 @@ const inputForms = (
 );
 
 class ThingsList extends React.Component {
+
+    componentDidMount() {
+        this.props.readThings()
+    }
+
     render () {
         const props = this.props; 
         return (
@@ -144,6 +149,7 @@ const mapDispatchToProps = dispatch => ( {
     edit: () => dispatch(edit()),
     remove: (thing) => dispatch(remove(thing)),
     close: () => dispatch(close()),
+    readThings: () => dispatch(readThings()),
 } )
 
 export default connect(mapStateToProps, mapDispatchToProps)(ThingsList)

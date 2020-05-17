@@ -1,4 +1,4 @@
-import { ADD, REMOVE } from '../actions'
+import { ADD, REMOVE, READ_THINGS } from '../actions'
 
 //reducerではactionsでプロトタイピングした動作の内容を記述する
 //初期値はinitialStateとして定義
@@ -23,6 +23,8 @@ export default (state = initialState, action) => {
         //REMOVEなら、削除するリストであるremoveThing(引数として渡されている)をfilterする
         case REMOVE:
             return ({ thingsList: state.thingsList.filter(list => list !== removeThing) })
+        case READ_THINGS:
+            return state
         //どれにも該当しないときはstateを返す
         default:
             return state
