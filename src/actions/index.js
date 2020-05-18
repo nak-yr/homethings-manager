@@ -5,19 +5,19 @@ export const EDIT = 'EDIT'
 export const REMOVE = 'REMOVE'
 export const CLOSE = `CLOSE`
 export const READ_THINGS = `READ_THINGS`
+export const CREATE_THINGS = 'CREATE_THINGS'
 
 const ROOT_URL = 'https://nk-htmapi.herokuapp.com/api'
+
+//axios.defaults.withCredentials = false
 
 //Actionの定義では、使用する要素を定義していく
 //ここで定義した要素は、reducerに「action」として纏めてインポートされる
 
 //ADDは新規追加なので、カードに必要な要素を引数にとる
-export const add = ( name, location, memo, num ) => ({
+export const add = ( thing ) => ({
     type: ADD,
-    newName: name,
-    newLocation: location,
-    newMemo: memo,
-    newNum: num
+    addThing: thing
 })
 
 export const edit = () => ({
@@ -36,6 +36,17 @@ export const close = () => ({
 
 export const readThings = () => async dispatch => {
     const response = await axios.get(`${ROOT_URL}`)
-    console.log(response.data)
+    //console.log(response.data)
     dispatch({type: READ_THINGS, response})
+}
+
+export const createThings = thing => async dispatch => {
+    const params = new URLSearchParams();
+        params.append('name', thing.name);
+        params.append('location', thing.location);
+        params.append('memo', thing.memo);
+        params.append('num', thing.num);
+    const response = await axios.post(`${ROOT_URL}`, params)
+    console.log(response.data)
+    dispatch({type: CREATE_THINGS, response})
 }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import HelpContent from './HelpContent';
 import '../App.css';
 
-import { add, edit, remove, close, readThings } from '../actions';
+import { add, edit, remove, close, readThings, createThings } from '../actions';
 
 const inputForms = (
     <>
@@ -49,7 +49,17 @@ class ThingsList extends React.Component {
                 const locationElement = e.currentTarget.elements["formInputLocation"];
                 const memoElement = e.currentTarget.elements["formInputMemo"];
                 const numElement = e.currentTarget.elements["formInputNum"];
-                props.add(nameElement, locationElement, memoElement, numElement);
+                //追加要素をaddThingにまとめる
+                const addThing = {
+                    name: nameElement.value,
+                    location: locationElement.value,
+                    memo: memoElement.value,
+                    num: parseInt(numElement.value, 10),
+                }
+                //addThingをリストに追加
+                //props.add(addThing);
+                props.createThings(addThing);
+                props.readThings();
                 // stateの変更後に入力した値を空にする
                 nameElement.value = "";
                 locationElement.value = "";
@@ -145,11 +155,12 @@ class ThingsList extends React.Component {
 const mapStateToProps = state => ( {thingsList: state.properties.thingsList, showEdit: state.modal.showEdit} )
 
 const mapDispatchToProps = dispatch => ( {
-    add: (name, location, memo, num) => dispatch(add(name, location, memo, num)),
+    add: (thing) => dispatch(add(thing)),
     edit: () => dispatch(edit()),
     remove: (thing) => dispatch(remove(thing)),
     close: () => dispatch(close()),
     readThings: () => dispatch(readThings()),
+    createThings: (thing) => dispatch(createThings(thing)),
 } )
 
 export default connect(mapStateToProps, mapDispatchToProps)(ThingsList)
