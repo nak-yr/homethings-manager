@@ -1,4 +1,4 @@
-import { ADD, REMOVE, READ_THINGS, CREATE_THINGS } from '../actions'
+import { ADD, REMOVE, READ_THINGS, CREATE_THINGS, REMOVE_THINGS } from '../actions'
 
 //reducerではactionsでプロトタイピングした動作の内容を記述する
 //初期値はinitialStateとして定義
@@ -21,6 +21,8 @@ export default (state = initialState, action) => {
             //console.log(_.mapKeys(action.response.data, '_id'))
             return {thingsList: action.response.data}
         case CREATE_THINGS:
+            return {thingsList: action.response.data}
+        case REMOVE_THINGS:
             return state
         //どれにも該当しないときはstateを返す
         default:

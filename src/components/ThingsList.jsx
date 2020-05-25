@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import HelpContent from './HelpContent';
 import '../App.css';
 
-import { add, edit, remove, close, readThings, createThings } from '../actions';
+import { add, edit, remove, close, readThings, createThings, removeThings } from '../actions';
 
 const inputForms = (
     <>
@@ -39,33 +39,37 @@ class ThingsList extends React.Component {
         this.props.readThings()
     }
 
+    handleSubmit( e ) {
+        e.preventDefault();
+        const nameElement = e.currentTarget.elements["formInputName"];
+        const locationElement = e.currentTarget.elements["formInputLocation"];
+        const memoElement = e.currentTarget.elements["formInputMemo"];
+        const numElement = e.currentTarget.elements["formInputNum"];
+        //追加要素をaddThingにまとめる
+        const addThing = {
+            name: nameElement.value,
+            location: locationElement.value,
+            memo: memoElement.value,
+            num: parseInt(numElement.value, 10),
+        }
+        //addThingをリストに追加
+        //props.add(addThing);
+        this.props.createThings(addThing);
+        // stateの変更後に入力した値を空にする
+        nameElement.value = "";
+        locationElement.value = "";
+        memoElement.value = "";            
+        numElement.value = 1;   
+    }
+
     render () {
         const props = this.props; 
         return (
             <>
             <Form className="AddingForm" onSubmit={e => {
-                e.preventDefault();
-                const nameElement = e.currentTarget.elements["formInputName"];
-                const locationElement = e.currentTarget.elements["formInputLocation"];
-                const memoElement = e.currentTarget.elements["formInputMemo"];
-                const numElement = e.currentTarget.elements["formInputNum"];
-                //追加要素をaddThingにまとめる
-                const addThing = {
-                    name: nameElement.value,
-                    location: locationElement.value,
-                    memo: memoElement.value,
-                    num: parseInt(numElement.value, 10),
-                }
-                //addThingをリストに追加
-                //props.add(addThing);
-                props.createThings(addThing);
+                this.handleSubmit(e);
                 props.readThings();
-                // stateの変更後に入力した値を空にする
-                nameElement.value = "";
-                locationElement.value = "";
-                memoElement.value = "";            
-                numElement.value = 1;            
-            }}>
+                }}>
                 {inputForms}
                 <Button variant="outline-success" type="submit">
                     リストに追加
@@ -78,17 +82,19 @@ class ThingsList extends React.Component {
                     <Accordion className="AccordContent">
                         <Card>
                             <Accordion.Toggle as={Card.Header} eventKey="0">
-                                <ul className="ListDispWhole" key={thing.id}>
-                                    <li key={thing.name.id} className="ThingName">{thing.name}   ×{thing.num}</li>
-                                    <li key={thing.location.id} className="ThingChild">Location : {thing.location}</li>
-                                    <li key={thing.memo.id} className="ThingChild">Memo : {thing.memo}</li>
+                                <ul className="ListDispWhole" key={thing._id}>
+                                    <li className="ThingName">{thing.name}   ×{thing.num}</li>
+                                    <li className="ThingChild">Location : {thing.location}</li>
+                                    <li className="ThingChild">Memo : {thing.memo}</li>
                                 </ul>
                                 ・・・
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey="0">
                                 <Card.Body>
                                     <Button variant="outline-secondary" onClick={props.edit.bind(this)}>編集</Button>{' '}
-                                    <Button variant="outline-danger" onClick={props.remove.bind(this, thing)}>削除</Button>
+                                    <Button variant="outline-danger" onClick={ () => {props.removeThings(thing._id);
+                                    props.readThings();
+                                    }}>削除</Button>
 
                                     <Modal show={props.showEdit} onHide={props.close}>
                                     <Modal.Header closeButton>
@@ -161,6 +167,7 @@ const mapDispatchToProps = dispatch => ( {
     close: () => dispatch(close()),
     readThings: () => dispatch(readThings()),
     createThings: (thing) => dispatch(createThings(thing)),
+    removeThings: (id) => dispatch(removeThings(id)),
 } )
 
 export default connect(mapStateToProps, mapDispatchToProps)(ThingsList)

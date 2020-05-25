@@ -6,8 +6,9 @@ export const REMOVE = 'REMOVE'
 export const CLOSE = `CLOSE`
 export const READ_THINGS = `READ_THINGS`
 export const CREATE_THINGS = 'CREATE_THINGS'
+export const REMOVE_THINGS = 'REMOVE_THINGS'
 
-const ROOT_URL = 'https://nk-htmapi.herokuapp.com/api'
+const ROOT_URL = 'https://nk-htmapi.herokuapp.com/api/'
 
 //axios.defaults.withCredentials = false
 
@@ -41,12 +42,22 @@ export const readThings = () => async dispatch => {
 }
 
 export const createThings = thing => async dispatch => {
-    const params = new URLSearchParams();
-        params.append('name', thing.name);
-        params.append('location', thing.location);
-        params.append('memo', thing.memo);
-        params.append('num', thing.num);
+    const params = {
+        name: thing.name,
+        location: thing.location,
+        memo: thing.memo,
+        num: thing.num
+    }
     const response = await axios.post(`${ROOT_URL}`, params)
-    console.log(response.data)
+    .then(alert("リストに追加しました"))
+    console.log(response)
     dispatch({type: CREATE_THINGS, response})
+}
+
+export const removeThings =  id  => async dispatch => {
+    const strId = id.toString();
+    const url = `${ROOT_URL}` +  strId;
+    const response = await axios.delete(url)
+    .then(alert('リストから削除しました'))
+    dispatch({type: REMOVE_THINGS, response})
 }
