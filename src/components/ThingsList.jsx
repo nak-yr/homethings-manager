@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import { Accordion, Card, Button, Modal, Form } from "react-bootstrap";
 import { connect } from "react-redux";
@@ -61,6 +62,19 @@ class ThingsList extends React.Component {
     numElement.value = 1;
   }
 
+  formChangeSubmit(e, thing) {
+    e.preventDefault();
+    const eName = e.currentTarget.elements["formChangeName"];
+    const eLocation = e.currentTarget.elements["formChangeLocation"];
+    const eMemo = e.currentTarget.elements["formChangeMemo"];
+    const eNum = e.currentTarget.elements["formChangeNum"];
+    if (eName.value !== "") thing.name = eName.value;
+    if (eLocation.value !== "") thing.location = eLocation.value;
+    if (eMemo.value !== "") thing.memo = eMemo.value;
+    thing.num = eNum.value;
+    this.props.close();
+  }
+
   render() {
     const props = this.props;
     return (
@@ -81,7 +95,7 @@ class ThingsList extends React.Component {
 
         <div className="ListDispWhole">
           {props.thingsList.map((thing, index) => (
-            <Accordion className="AccordContent">
+            <Accordion className="AccordContent" key={index}>
               <Card>
                 <Accordion.Toggle as={Card.Header} eventKey="0">
                   <ul className="ListDispWhole" key={thing._id}>
@@ -113,17 +127,10 @@ class ThingsList extends React.Component {
                       </Modal.Header>
                       <Modal.Body>
                         <Form
+                          className={"editForm" + index}
                           onSubmit={(e) => {
-                            e.preventDefault();
-                            const eName = e.currentTarget.elements["formChangeName"];
-                            const eLocation = e.currentTarget.elements["formChangeLocation"];
-                            const eMemo = e.currentTarget.elements["formChangeMemo"];
-                            const eNum = e.currentTarget.elements["formChangeNum"];
-                            if (eName.value !== "") thing.name = eName.value;
-                            if (eLocation.value !== "") thing.location = eLocation.value;
-                            if (eMemo.value !== "") thing.memo = eMemo.value;
-                            thing.num = eNum.value;
-                            props.close();
+                            console.log(props.thingsList[0]);
+                            this.formChangeSubmit(e, thing);
                           }}
                         >
                           <Form.Group controlId="formChangeName">
